@@ -1,7 +1,14 @@
+// set webhook
+// https://api.telegram.org/bot584181575:AAHOjDEMEAx1dyzUh5WO2HV_wc-R7kcUVJI/setWebhook?url=https://tg-bot-server-hrxqzleoqm.now.sh
+
 var express = require('express')
 var app = express()
 var bodyParser = require('body-parser')
 const axios = require('axios')
+
+const sendUrl = 'https://api.telegram.org/bot584181575:AAHOjDEMEAx1dyzUh5WO2HV_wc-R7kcUVJI/sendMessage'
+const key_shoot = '/shoot'
+const key_snoop = "/snoopdogg"
 
 app.use(bodyParser.json()) // for parsing application/json
 app.use(
@@ -10,29 +17,29 @@ app.use(
   })
 ) // for parsing application/x-www-form-urlencoded
 
-//This is the route the API will call
-app.post('/new-message', function(req, res) {
+app.post('/', function(req, res) {
+
   const { message } = req.body
-  
-  console.log('Message text received : ' + message.text)
-  console.log('Message id received : ' + message.chat.id)
+  var response_msg = 'Yeah, You could say that!'
+  var type = '/DEFAULT'
 
-  //Each message contains "text" and a "chat" object, which has an "id" which is the chat id
+  if (message.text.startsWith(key_shoot)) {
+    // in case a message is not present, or if our message does not have the word marco in it, do nothing and return an empty response
+    response_msg = 'Bang! Bang! Bang!'  
+    type = key_shoot
+  } else if (message.text.startsWith(key_snoop)) {
+    response_msg = 'Nada! Nada! Nada!'
+    type = key_snoop
+  }
 
-  // if (!message || message.text.toLowerCase().indexOf('marco') < 0) {
-    // // In case a message is not present, or if our message does not have the word marco in it, do nothing and return an empty response
-    // return res.end()
-  // }
+  console.log('[' + type + '] User #' + message.chat.id + " says " + message.text)
 
-  // If we've gotten this far, it means that we have received a message containing the word "marco".
-  // Respond by hitting the telegram bot API and responding to the approprite chat_id with the word "Polo!!"
-  // Remember to use your own API toked instead of the one below  "https://api.telegram.org/bot<your_api_token>/sendMessage"
   axios
     .post(
-      'https://api.telegram.org/bot584181575:AAHOjDEMEAx1dyzUh5WO2HV_wc-R7kcUVJI/sendMessage',
+      sendUrl,
       {
         chat_id: message.chat.id,
-        text: 'Coffee time!! You said ' + message.text
+        text: response_msg
       }
     )
     .then(response => {
@@ -45,6 +52,7 @@ app.post('/new-message', function(req, res) {
       console.log('Error :', err)
       res.end('Error :' + err)
     })
+
 })
 
 // Finally, start our server
