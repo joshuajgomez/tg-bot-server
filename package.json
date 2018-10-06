@@ -1,0 +1,29 @@
+{
+  "name": "tg-bot-server",
+  "version": "1.0.0",
+  "description": "Node.js server for Telegram bot",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joshuajgomez/tg-bot-server.git"
+  },
+  "keywords": [
+    "bot",
+    "telegram",
+    "hotstuff"
+  ],
+  "author": "Joshua Gomez",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/joshuajgomez/tg-bot-server/issues"
+  },
+  "homepage": "https://github.com/joshuajgomez/tg-bot-server#readme",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3"
+  }
+}
