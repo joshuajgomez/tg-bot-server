@@ -21,6 +21,10 @@ const sendUrl = 'https://api.telegram.org/bot584181575:AAHOjDEMEAx1dyzUh5WO2HV_w
 const key_shoot = '/shoot'
 const key_snoop = "/snoopdogg"
 const key_image = '/image'
+const key_music = '/music'
+const key_josh = 'josh'
+const image_url = './family-guy-chicken.png'
+const music_url = './love_me_like_you_do.mp3'
 
 app.use(bodyParser.json()) // for parsing application/json
 app.use(
@@ -35,44 +39,63 @@ app.post('/', function(req, res) {
   var response_msg = 'Yeah, You could say that!'
   var type = '/DEFAULT'
 
-  if (message.text.startsWith(key_shoot)) {
-    // in case a message is not present, or if our message does not have the word marco in it, do nothing and return an empty response
-    response_msg = 'Bang! Bang! Bang!'  
-    type = key_shoot
-  } else if (message.text.startsWith(key_snoop)) {
-    response_msg = 'Nada! Nada! Nada!'
-    type = key_snoop
-  } else if (message.text.startsWith(key_image)) {
-    api.sendPhoto({
-      chat_id : message.chat.id,
-      photo: './image.jpg'//replace your image url here
+  if (message.text.toLowerCase().includes(key_josh)) {
+  // in case a message is not present, or if our message does not have the word marco in it, do nothing and return an empty response
+  response_msg = 'I respect my master.'  
+  type = key_josh
+} else if (message.text.startsWith(key_shoot)) {
+  // in case a message is not present, or if our message does not have the word marco in it, do nothing and return an empty response
+  response_msg = 'Bang! Bang! Bang!'  
+  type = key_shoot
+} else if (message.text.startsWith(key_snoop)) {
+  response_msg = 'Nada! Nada! Nada!'
+  type = key_snoop
+} else if (message.text.startsWith(key_image)) {
+  response_msg = 'One image coming right up!!'
+  api
+  .sendPhoto({
+    chat_id : message.chat.id,
+    photo: image_url//replace your image url here
+  }) 
+  .then(function(data)
+  {
+    // console.log(data);
+  });
+} else if (message.text.startsWith(key_music)) {
+  response_msg = 'I will give you music'
+  api
+  .sendAudio({
+    chat_id : message.chat.id,
+    audio: music_url//replace your image url here
   })
-    .then(function(data)
-    {
-      console.log(data);
-    });
+  .then(function(data)
+  {
+    // console.log(data);
+  });
+} else {
+  return res.end()    
+}
+
+// console.log('[' + type + '] User #' + message.chat.id + " says " + message.text)
+
+axios
+.post(
+  sendUrl,
+  {
+    chat_id: message.chat.id,
+    text: response_msg
   }
-
-  console.log('[' + type + '] User #' + message.chat.id + " says " + message.text)
-
-  axios
-  .post(
-    sendUrl,
-    {
-      chat_id: message.chat.id,
-      text: response_msg
-    }
-    )
-  .then(response => {
-      // We get here if the message was successfully posted
-      console.log('Message posted')
-      res.end('ok')
-    })
-  .catch(err => {
-      // ...and here if it was not
-      console.log('Error :', err)
-      res.end('Error :' + err)
-    })
+  )
+.then(response => {
+    // We get here if the message was successfully posted
+    // console.log('Message posted')
+    res.end('ok')
+  })
+.catch(err => {
+    // ...and here if it was not
+    // console.log('Error :', err)
+    res.end('Error :' + err)
+  })
 
 })
 
