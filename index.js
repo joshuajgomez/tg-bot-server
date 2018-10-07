@@ -12,8 +12,7 @@ var telegram = require('telegram-bot-api');
 var api = new telegram({
   token: '584181575:AAHOjDEMEAx1dyzUh5WO2HV_wc-R7kcUVJI',
   updates: {
-    enabled: true,
-    get_interval: 1000
+    enabled: false,
   }
 });
 
