@@ -1,6 +1,6 @@
 // set webhook
 // https://api.telegram.org/bot584181575:AAHOjDEMEAx1dyzUh5WO2HV_wc-R7kcUVJI/setWebhook?url=https://tg-bot-server-hrxqzleoqm.now.sh
-// logs
+// logs (paid)
 // https://zeit.co/joshuajgomez/tg-bot-server/byfsfgwndu/logs
 
 var express = require('express')
