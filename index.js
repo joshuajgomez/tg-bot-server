@@ -8,12 +8,15 @@ var app = express()
 var bodyParser = require('body-parser')
 const axios = require('axios')
 
+const log_bot_token = '640668153:AAGFiSrhCx5kpZF5FOhjiQwRStwkKaPzloU'
 const sendUrl = 'https://api.telegram.org/bot584181575:AAHOjDEMEAx1dyzUh5WO2HV_wc-R7kcUVJI/sendMessage'
+const logUrl = 'https://api.telegram.org/bot640668153:AAGFiSrhCx5kpZF5FOhjiQwRStwkKaPzloU/sendMessage'
 const key_shoot = '/shoot'
 const key_snoop = "/snoopdogg"
 const key_image = '/image'
 const key_music = '/music'
 const key_josh = 'josh'
+const josh_chat_id = '538864923'
 
 app.use(bodyParser.json()) // for parsing application/json
 app.use(
@@ -45,8 +48,20 @@ app.post('/', function(req, res) {
 	return res.end()    
   }
 
-console.log('[' + type + '] User #' + message.chat.id + " says " + message.text)
-
+const logtext = '[' + type + '] User #' + message.chat.id + " says " + message.text;
+console.log(logtext);
+// send to logger-bot 
+axios
+	.post(logUrl, 
+		{
+			chat_id: josh_chat_id,
+			text: logtext
+		})
+	.then (response => {
+		res.end('ok')
+		})
+		
+		
 axios
 .post(
   sendUrl,
