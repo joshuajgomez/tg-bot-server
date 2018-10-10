@@ -16,7 +16,7 @@ const key_snoop = "/snoopdogg"
 const key_image = '/image'
 const key_music = '/music'
 const key_josh = 'josh'
-const josh_chat_id = '538864923'
+const josh_chat_id = '557247651'
 
 app.use(bodyParser.json()) // for parsing application/json
 app.use(
